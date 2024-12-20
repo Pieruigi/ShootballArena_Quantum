@@ -1,0 +1,10 @@
+component Test
+{
+    [ExcludeFromPrototype]
+    ComponentPrototypeRef Prototype;
+
+    [ExcludeFromPrototype]
+    FP ValueA;
+
+    FP ValueB;
+}

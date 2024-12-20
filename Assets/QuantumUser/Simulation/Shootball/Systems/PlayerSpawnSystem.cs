@@ -25,6 +25,15 @@ namespace Quantum.Shootball
             // Add the player link
             f.Add(entity, new PlayerLink() { PlayerRef = player });
             
+            
+            //// TEST
+            //if (f.Has<Test>(entity))
+            //{
+            //    var c = f.Get<Test>(entity);
+            //    c.TestMehod();
+            //}
+
+            /////////
         }
     }
 }

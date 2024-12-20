@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: ClassicGameMode
   m_EditorClassIdentifier: 
   Identifier:
-    Path: QuantumUser/Resources/Shootball/Config/GameModes/ClassicGameMode
+    Path: QuantumUser/Resources/Shootball/GameModes/ClassicGameMode
     Guid:
       Value: 510337715279547374
   GameModeName: Classic

@@ -74,6 +74,21 @@ namespace Quantum.Prototypes {
         MaterializeUser(frame, ref result, in context);
     }
   }
+  [System.SerializableAttribute()]
+  [Quantum.Prototypes.Prototype(typeof(Quantum.Test))]
+  public unsafe partial class TestPrototype : ComponentPrototype<Quantum.Test> {
+    public FP ValueB;
+    partial void MaterializeUser(Frame frame, ref Quantum.Test result, in PrototypeMaterializationContext context);
+    public override Boolean AddToEntity(FrameBase f, EntityRef entity, in PrototypeMaterializationContext context) {
+        Quantum.Test component = default;
+        Materialize((Frame)f, ref component, in context);
+        return f.Set(entity, component) == SetResult.ComponentAdded;
+    }
+    public void Materialize(Frame frame, ref Quantum.Test result, in PrototypeMaterializationContext context = default) {
+        result.ValueB = this.ValueB;
+        MaterializeUser(frame, ref result, in context);
+    }
+  }
 }
 #pragma warning restore 0109
 #pragma warning restore 1591

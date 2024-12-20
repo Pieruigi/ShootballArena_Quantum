@@ -41,81 +41,8 @@ MonoBehaviour:
   Regions: []
   StaticColliders2D: []
   StaticColliders3D: []
-  MapEntities:
-  - Components:
-    - rid: 5815115425754644480
-    - rid: 5815115425754644481
-    - rid: 5815115425754644482
-    - rid: 5815115425754644483
+  MapEntities: []
   SerializedTriangleDataUncompressedSize: 8
   references:
     version: 2
-    RefIds:
-    - rid: 5815115425754644480
-      type: {class: Transform3DPrototype, ns: Quantum.Prototypes, asm: Quantum.Engine}
-      data:
-        Position:
-          X:
-            RawValue: 2785280
-          Y:
-            RawValue: 0
-          Z:
-            RawValue: -2464153
-        Rotation:
-          X:
-            RawValue: 0
-          Y:
-            RawValue: 0
-          Z:
-            RawValue: 0
-    - rid: 5815115425754644481
-      type: {class: PhysicsCollider3DPrototype, ns: Quantum.Prototypes, asm: Quantum.Engine}
-      data:
-        ShapeConfig:
-          ShapeType: 32
-          SphereRadius:
-            RawValue: 0
-          CapsuleRadius:
-            RawValue: 32768
-          CapsuleHeight:
-            RawValue: 117965
-          PositionOffset:
-            X:
-              RawValue: 0
-            Y:
-              RawValue: 58982
-            Z:
-              RawValue: 0
-          BoxExtents:
-            X:
-              RawValue: 0
-            Y:
-              RawValue: 0
-            Z:
-              RawValue: 0
-          RotationOffset:
-            X:
-              RawValue: 0
-            Y:
-              RawValue: 0
-            Z:
-              RawValue: 0
-          UserTag: 0
-          IsPersistent: 1
-          CompoundShapes: []
-        Layer: 0
-        IsTrigger: 0
-        PhysicsMaterial:
-          Id:
-            Value: 0
-    - rid: 5815115425754644482
-      type: {class: PhysicsCallbacks3DPrototype, ns: Quantum.Prototypes, asm: Quantum.Engine}
-      data:
-        CallbackFlags:
-          Value: 0
-    - rid: 5815115425754644483
-      type: {class: CharacterController3DPrototype, ns: Quantum.Prototypes, asm: Quantum.Engine}
-      data:
-        Config:
-          Id:
-            Value: 166147179332483656
+    RefIds: []
