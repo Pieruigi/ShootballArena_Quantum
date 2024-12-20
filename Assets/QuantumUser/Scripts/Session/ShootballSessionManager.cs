@@ -1,23 +1,68 @@
 
+using Photon.Deterministic.Protocol;
 using Photon.Realtime;
 using System;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.SceneManagement;
 
 namespace Quantum.Shootball
 {
-    public static class ShootballSessionManager
+    public class ShootballSessionManager: Singleton<ShootballSessionManager>
     {
-        public struct SessionArgs
-        {
-            public string RoomName;
-            public int NumOfPlayers;
-            
-        }
         
-        static RealtimeClient Client;
+        public RealtimeClient Client { get; private set; }
 
-        public static async void JoinMultiplayerSession(SessionArgs args, UnityAction<bool> callback)
+        // Start is called before the first frame update
+        void Start()
+        {
+#if UNITY_EDITOR
+            // Move this configuration where player choose the type of game
+            ShootballSessionInfo.Map = Utility.GetAssetRef<Map>("Shootball/Maps/DefaultArenaMap");
+            ShootballSessionInfo.SimulationConfig = Utility.GetAssetRef<SimulationConfig>("Shootball/Config/ShootballSimulationConfig");
+            ShootballSessionInfo.SystemsConfig = Utility.GetAssetRef<SystemsConfig>("Shootball/Config/ShootballSystemConfig");
+            //Debug.Log($"SystemsConfig:{ShootballSessionInfo.SystemsConfig.Id}, isValid:{ShootballSessionInfo.SystemsConfig.IsValid}");
+            ShootballSessionInfo.GameMode = Utility.GetAssetRef<GameMode>("Shootball/GameModes/ClassicGameMode");
+            ShootballSessionInfo.NumOfPlayers = 2;
+            ShootballSessionInfo.SessionName = "shootball_test_session";
+
+            // Player
+            ShootballPlayerInfo.PlayerName = "Player-1";
+            ShootballPlayerInfo.EntityPrototypeAssetRef = Utility.GetAssetRef<EntityPrototype>("Shootball/Players/PlayerBlueEntityPrototype");
+            Debug.Log($"Player:{ShootballPlayerInfo.EntityPrototypeAssetRef}, isValid:{ShootballSessionInfo.SystemsConfig.IsValid}");
+            //QuantumRunner.Default.Session
+#endif
+        }
+
+        private void OnEnable()
+        {
+            SceneManager.sceneLoaded += HandleOnSceneLoaded;
+        }
+
+        private void OnDisable()
+        {
+            SceneManager.sceneLoaded -= HandleOnSceneLoaded;
+        }
+
+        private void HandleOnSceneLoaded(Scene scene, LoadSceneMode mode)
+        {
+            // Set the scene we just loaded as the active scene and unload the old one.
+            Scene oldScene = SceneManager.GetActiveScene();
+            if(scene == oldScene)
+            {
+                Debug.LogWarning($"Loaded scene is the same as the active scene, loaded:{scene}, active:{oldScene}");
+                return;
+            }
+
+            // Set the new scene as the active one
+            SceneManager.SetActiveScene(scene);
+            // Unload the old scene
+            SceneManager.UnloadSceneAsync(oldScene);
+
+        }
+
+        public async void JoinMultiplayerSession(UnityAction<bool> callback)
         {
             var connectionArguments = new MatchmakingArguments
             {
@@ -28,9 +73,9 @@ namespace Quantum.Shootball
                 //Will be configured as "EnterRoomArgs.RoomOptions.EmptyRoomTtl" when creating a Photon room
                 EmptyRoomTtlInSeconds = 10,
                 // Will be configured as "EnterRoomArgs.RoomOptions.RoomName when creating a Photon room.
-                RoomName = args.RoomName,
+                RoomName = ShootballSessionInfo.SessionName,
                 // The maximum number of clients for the room, in this case we use the code-generated max possible players for the Quantum simulation
-                MaxPlayers = args.NumOfPlayers,
+                MaxPlayers = ShootballSessionInfo.NumOfPlayers,
                 // Configure if the connect request can also create rooms or if it only tries to join
                 CanOnlyJoin = false,
                 // Custom room properties that are configured as "EnterRoomArgs.RoomOptions.CustomRoomProperties"
@@ -63,6 +108,8 @@ namespace Quantum.Shootball
             //
             // Start game
             //
+            
+            // Create session 
             var sessionRunnerArguments = new SessionRunner.Arguments
             {
                 // The runner factory is the glue between the Quantum.Runner and Unity
@@ -79,21 +126,29 @@ namespace Quantum.Shootball
                 // RuntimeConfig info
                 RuntimeConfig = new RuntimeConfig()
                 {
-                    Map = ShootballConfigurationInfo.Map,
+                    Map = ShootballSessionInfo.Map,
                     Seed = DateTime.Now.Millisecond,
-                    SystemsConfig = ShootballConfigurationInfo.SystemConfig,
-                    SimulationConfig = ShootballConfigurationInfo.SimulationConfig,
-                    GameMode = ShootballConfigurationInfo.GameMode
+                    SystemsConfig = ShootballSessionInfo.SystemsConfig,
+                    SimulationConfig = ShootballSessionInfo.SimulationConfig,
+                    GameMode = ShootballSessionInfo.GameMode
+                  
                 }
             };
 
             QuantumRunner runner = (QuantumRunner)await SessionRunner.StartAsync(sessionRunnerArguments);
             if(runner == null || !runner.Session.IsRunning)
             { 
+
                 callback?.Invoke(false); 
             }
             else
             {
+                var runtimePlayer = new RuntimePlayer()
+                {
+                    PlayerAvatar = ShootballPlayerInfo.EntityPrototypeAssetRef,
+                    PlayerNickname = ShootballPlayerInfo.PlayerName
+                };
+                runner.Game.AddPlayer(runtimePlayer);
                 callback?.Invoke(true);
             }
         }

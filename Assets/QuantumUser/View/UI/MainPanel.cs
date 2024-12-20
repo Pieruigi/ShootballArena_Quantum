@@ -15,18 +15,6 @@ namespace Quantum.Shootball
 {
     public class MainPanel : MonoBehaviour
     {
-        // Start is called before the first frame update
-        void Start()
-        {
-#if UNITY_EDITOR
-            // Move this configuration where player choose the type of game
-            ShootballConfigurationInfo.InitMap("Shootball/Maps/DefaultArenaMap");
-            ShootballConfigurationInfo.InitSimulationConfig("Shootball/Config/ShootballSimulationConfig");
-            ShootballConfigurationInfo.InitSystemConfig("Shootball/Config/ShootballSystemConfig");
-            ShootballConfigurationInfo.InitGameMode("Shootball/GameModes/ClassicGameMode");
-
-#endif
-        }
 
         // Update is called once per frame
         void Update()
@@ -36,15 +24,9 @@ namespace Quantum.Shootball
 
       
 
-        public async void CreateOrJoinMultiplayerSession()
+        public void CreateOrJoinMultiplayerSession()
         {
-            ShootballSessionManager.JoinMultiplayerSession(
-                new ShootballSessionManager.SessionArgs()
-                {
-                    NumOfPlayers = 2,
-                    RoomName = "Pippo"
-                },
-                (ret) => Debug.Log($"Join session result:{ret}"));
+            ShootballSessionManager.Instance.JoinMultiplayerSession((ret) => Debug.Log($"Join session result:{ret}"));
                 
         }
     }

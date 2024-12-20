@@ -1,0 +1,7 @@
+input
+{
+    Byte EncodedDirection;
+    button Jump;
+    button Fire;
+    button SpecialAttack_1;
+}

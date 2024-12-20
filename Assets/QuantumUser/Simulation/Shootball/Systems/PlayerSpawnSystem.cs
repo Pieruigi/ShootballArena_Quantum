@@ -24,16 +24,14 @@ namespace Quantum.Shootball
 
             // Add the player link
             f.Add(entity, new PlayerLink() { PlayerRef = player });
-            
-            
-            //// TEST
-            //if (f.Has<Test>(entity))
-            //{
-            //    var c = f.Get<Test>(entity);
-            //    c.TestMehod();
-            //}
 
-            /////////
+            // Set position
+            if (f.Unsafe.TryGetPointer<Transform3D>(entity, out var t))
+            {
+                t->Position = FPVector3.Up * 2;
+                t->Teleport(f, t->Position);
+            }
+
         }
     }
 }

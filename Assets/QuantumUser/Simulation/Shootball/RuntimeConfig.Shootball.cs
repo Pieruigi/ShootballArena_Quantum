@@ -9,8 +9,6 @@ namespace Quantum
     {
         public AssetRef<Quantum.Shootball.GameMode> GameMode;
 
-        partial void DumpUserData(ref String dump)
-        {
-        }
+     
     }
 }
