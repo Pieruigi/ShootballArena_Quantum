@@ -1,7 +1,12 @@
 input
 {
     Byte EncodedDirection;
+    FP Yaw;
+    FP Pitch;
     button Jump;
-    button Fire;
-    button SpecialAttack_1;
+    button Sprint;
+    button Fire1;
+    button Fire2;
+
+    //button SpecialAttack_1;
 }

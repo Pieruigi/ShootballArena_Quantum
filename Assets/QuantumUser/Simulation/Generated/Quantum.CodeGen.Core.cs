@@ -52,8 +52,9 @@ namespace Quantum {
   [System.FlagsAttribute()]
   public enum InputButtons : int {
     Jump = 1 << 0,
-    Fire = 1 << 1,
-    SpecialAttack_1 = 1 << 2,
+    Sprint = 1 << 1,
+    Fire1 = 1 << 2,
+    Fire2 = 1 << 3,
   }
   public static unsafe partial class FlagsExtensions {
     public static Boolean IsFlagSet(this InputButtons self, InputButtons flag) {
@@ -404,23 +405,32 @@ namespace Quantum {
   }
   [StructLayout(LayoutKind.Explicit)]
   public unsafe partial struct Input {
-    public const Int32 SIZE = 40;
-    public const Int32 ALIGNMENT = 4;
+    public const Int32 SIZE = 72;
+    public const Int32 ALIGNMENT = 8;
     [FieldOffset(0)]
     public Byte EncodedDirection;
     [FieldOffset(16)]
+    public FP Yaw;
+    [FieldOffset(8)]
+    public FP Pitch;
+    [FieldOffset(48)]
     public Button Jump;
-    [FieldOffset(4)]
-    public Button Fire;
-    [FieldOffset(28)]
-    public Button SpecialAttack_1;
+    [FieldOffset(60)]
+    public Button Sprint;
+    [FieldOffset(24)]
+    public Button Fire1;
+    [FieldOffset(36)]
+    public Button Fire2;
     public override Int32 GetHashCode() {
       unchecked { 
         var hash = 19249;
         hash = hash * 31 + EncodedDirection.GetHashCode();
+        hash = hash * 31 + Yaw.GetHashCode();
+        hash = hash * 31 + Pitch.GetHashCode();
         hash = hash * 31 + Jump.GetHashCode();
-        hash = hash * 31 + Fire.GetHashCode();
-        hash = hash * 31 + SpecialAttack_1.GetHashCode();
+        hash = hash * 31 + Sprint.GetHashCode();
+        hash = hash * 31 + Fire1.GetHashCode();
+        hash = hash * 31 + Fire2.GetHashCode();
         return hash;
       }
     }
@@ -430,30 +440,35 @@ namespace Quantum {
     public Boolean IsDown(InputButtons button) {
       switch (button) {
         case InputButtons.Jump: return Jump.IsDown;
-        case InputButtons.Fire: return Fire.IsDown;
-        case InputButtons.SpecialAttack_1: return SpecialAttack_1.IsDown;
+        case InputButtons.Sprint: return Sprint.IsDown;
+        case InputButtons.Fire1: return Fire1.IsDown;
+        case InputButtons.Fire2: return Fire2.IsDown;
         default: return false;
       }
     }
     public Boolean WasPressed(InputButtons button) {
       switch (button) {
         case InputButtons.Jump: return Jump.WasPressed;
-        case InputButtons.Fire: return Fire.WasPressed;
-        case InputButtons.SpecialAttack_1: return SpecialAttack_1.WasPressed;
+        case InputButtons.Sprint: return Sprint.WasPressed;
+        case InputButtons.Fire1: return Fire1.WasPressed;
+        case InputButtons.Fire2: return Fire2.WasPressed;
         default: return false;
       }
     }
     static partial void SerializeCodeGen(void* ptr, FrameSerializer serializer) {
         var p = (Input*)ptr;
         serializer.Stream.Serialize(&p->EncodedDirection);
-        Button.Serialize(&p->Fire, serializer);
+        FP.Serialize(&p->Pitch, serializer);
+        FP.Serialize(&p->Yaw, serializer);
+        Button.Serialize(&p->Fire1, serializer);
+        Button.Serialize(&p->Fire2, serializer);
         Button.Serialize(&p->Jump, serializer);
-        Button.Serialize(&p->SpecialAttack_1, serializer);
+        Button.Serialize(&p->Sprint, serializer);
     }
   }
   [StructLayout(LayoutKind.Explicit)]
   public unsafe partial struct _globals_ {
-    public const Int32 SIZE = 800;
+    public const Int32 SIZE = 992;
     public const Int32 ALIGNMENT = 8;
     [FieldOffset(0)]
     public AssetRef<Map> Map;
@@ -475,14 +490,14 @@ namespace Quantum {
     public PhysicsSceneSettings PhysicsSettings;
     [FieldOffset(544)]
     public Int32 PlayerConnectedCount;
-    [FieldOffset(548)]
+    [FieldOffset(552)]
     [FramePrinter.FixedArrayAttribute(typeof(Input), 6)]
-    private fixed Byte _input_[240];
-    [FieldOffset(792)]
+    private fixed Byte _input_[432];
+    [FieldOffset(984)]
     public BitSet6 PlayerLastConnectionState;
     public FixedArray<Input> input {
       get {
-        fixed (byte* p = _input_) { return new FixedArray<Input>(p, 40, 6); }
+        fixed (byte* p = _input_) { return new FixedArray<Input>(p, 72, 6); }
       }
     }
     public override Int32 GetHashCode() {
@@ -646,9 +661,12 @@ namespace Quantum {
       if ((int)player >= (int)_globals->input.Length) { throw new System.ArgumentOutOfRangeException("player"); }
       var i = _globals->input.GetPointer(player);
       i->EncodedDirection = input.EncodedDirection;
+      i->Yaw = input.Yaw;
+      i->Pitch = input.Pitch;
       i->Jump = i->Jump.Update(this.Number, input.Jump);
-      i->Fire = i->Fire.Update(this.Number, input.Fire);
-      i->SpecialAttack_1 = i->SpecialAttack_1.Update(this.Number, input.SpecialAttack_1);
+      i->Sprint = i->Sprint.Update(this.Number, input.Sprint);
+      i->Fire1 = i->Fire1.Update(this.Number, input.Fire1);
+      i->Fire2 = i->Fire2.Update(this.Number, input.Fire2);
     }
     public Input* GetPlayerInput(PlayerRef player) {
       if ((int)player >= (int)_globals->input.Length) { throw new System.ArgumentOutOfRangeException("player"); }

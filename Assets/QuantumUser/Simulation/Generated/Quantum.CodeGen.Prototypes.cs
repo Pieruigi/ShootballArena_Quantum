@@ -53,15 +53,21 @@ namespace Quantum.Prototypes {
   [Quantum.Prototypes.Prototype(typeof(Quantum.Input))]
   public unsafe partial class InputPrototype : StructPrototype {
     public Byte EncodedDirection;
+    public FP Yaw;
+    public FP Pitch;
     public Button Jump;
-    public Button Fire;
-    public Button SpecialAttack_1;
+    public Button Sprint;
+    public Button Fire1;
+    public Button Fire2;
     partial void MaterializeUser(Frame frame, ref Quantum.Input result, in PrototypeMaterializationContext context);
     public void Materialize(Frame frame, ref Quantum.Input result, in PrototypeMaterializationContext context = default) {
         result.EncodedDirection = this.EncodedDirection;
+        result.Yaw = this.Yaw;
+        result.Pitch = this.Pitch;
         result.Jump = this.Jump;
-        result.Fire = this.Fire;
-        result.SpecialAttack_1 = this.SpecialAttack_1;
+        result.Sprint = this.Sprint;
+        result.Fire1 = this.Fire1;
+        result.Fire2 = this.Fire2;
         MaterializeUser(frame, ref result, in context);
     }
   }

@@ -5,6 +5,7 @@ namespace Quantum.Shootball
     using Quantum;
     using System;
     using static UnityEngine.EventSystems.EventTrigger;
+    using System.Diagnostics;
 
     [Preserve]
     public unsafe class PlayerControllerSystem : SystemMainThreadFilter<PlayerControllerSystem.Filter>
@@ -43,7 +44,9 @@ namespace Quantum.Shootball
             if (input->Jump.WasPressed)
                 cc->Jump(f);
 
-            cc->Move(f, filter.Entity, input->Direction.XOY);
+
+
+            cc->Move(f, filter.Entity, input->Direction.Normalized.XOY);
         }
 
         
