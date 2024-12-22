@@ -29,7 +29,7 @@ namespace Quantum.Shootball
 
             // Player
             ShootballPlayerInfo.PlayerName = "Player-1";
-            ShootballPlayerInfo.EntityPrototypeAssetRef = Utility.GetAssetRef<EntityPrototype>("Shootball/Players/PlayerRedEntityPrototype");
+            ShootballPlayerInfo.EntityPrototypeAssetRef = Utility.GetAssetRef<EntityPrototype>("Shootball/Players/BluePlayerEntityPrototype");
             Debug.Log($"Player:{ShootballPlayerInfo.EntityPrototypeAssetRef}, isValid:{ShootballSessionInfo.SystemsConfig.IsValid}");
             //QuantumRunner.Default.Session
 //#endif
@@ -120,7 +120,7 @@ namespace Quantum.Shootball
                 ClientId = Client.UserId,
                 SessionConfig = QuantumDeterministicSessionConfigAsset.DefaultConfig,
                 PlayerCount = 2,//ShootballSessionInfo.NumOfPlayers,
-                StartGameTimeoutInSeconds = 30, // TODO: we must use WaitForGameStart()
+                StartGameTimeoutInSeconds = 10, // TODO: we must use WaitForGameStart()
                 Communicator = new QuantumNetworkCommunicator(Client),
                 GameMode = Photon.Deterministic.DeterministicGameMode.Multiplayer,
 

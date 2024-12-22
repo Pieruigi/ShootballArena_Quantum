@@ -56,8 +56,6 @@ namespace Quantum.Prototypes {
     public AssetRef<CharacterSpecs> Specs;
     [HideInInspector()]
     public FP CurrentStamina;
-    [HideInInspector()]
-    public FP SprintMultiplier;
     partial void MaterializeUser(Frame frame, ref Quantum.CharacterStats result, in PrototypeMaterializationContext context);
     public override Boolean AddToEntity(FrameBase f, EntityRef entity, in PrototypeMaterializationContext context) {
         Quantum.CharacterStats component = default;
@@ -67,7 +65,6 @@ namespace Quantum.Prototypes {
     public void Materialize(Frame frame, ref Quantum.CharacterStats result, in PrototypeMaterializationContext context = default) {
         result.Specs = this.Specs;
         result.CurrentStamina = this.CurrentStamina;
-        result.SprintMultiplier = this.SprintMultiplier;
         MaterializeUser(frame, ref result, in context);
     }
   }

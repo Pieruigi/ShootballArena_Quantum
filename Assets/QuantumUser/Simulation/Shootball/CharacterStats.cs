@@ -1,3 +1,4 @@
+using Photon.Deterministic;
 using Quantum.Shootball;
 using System.Collections;
 using System.Collections.Generic;
@@ -9,25 +10,24 @@ namespace Quantum
     {
         public unsafe void Initialize(Frame f, EntityRef entity)
         {
-            // Load the character specs
-            var specs = f.FindAsset<CharacterSpecs>(Specs);
-
             // Get the character controller
-            if(f.Unsafe.TryGetPointer<CharacterController3D>(entity, out var cc))
-            {
-                // Retrieve the character controller config; modifying it at runtime ensures that changes do not affect other controllers
-                var ccConfig = f.FindAsset<CharacterController3DConfig>(cc->Config);
+            var cc = f.Unsafe.GetPointer<CharacterController3D>(entity);
 
-                // Change values
-                ccConfig.Acceleration = specs.Acceleration;
-                ccConfig.BaseJumpImpulse = specs.JumpForce;
-                ccConfig.MaxSpeed = specs.MaxSpeed;
-
-                // Change value on stats
-                CurrentStamina = specs.MaxStamina;
-                SprintMultiplier = specs.SprintMultiplier;
-            }
-
+            // Create a new cc config asset
+            var config = AssetObject.Create<CharacterController3DConfig>();
+            // Add the new asset to the dynamic database
+            f.AddAsset(config);
+            // Get the specs asset
+            var specs = f.FindAsset(Specs);
+            // Initialize values
+            config.MaxSpeed = specs.MaxSpeed;
+            config.BaseJumpImpulse = specs.JumpForce;
+            config.Acceleration = specs.Acceleration;
+            // Init the character controller with the new config 
+            cc->Init((FrameThreadSafe)f, config);
+            Debug.Log($"JumpForce:{f.FindAsset(cc->Config).BaseJumpImpulse}");
+            // Set other values
+            CurrentStamina = specs.MaxStamina;
         }
     }
 }

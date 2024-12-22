@@ -10,21 +10,21 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2cdc6a7bc16f1ca4ab24355fb6b5d217, type: 3}
-  m_Name: CharacterBlueSpecs
+  m_Name: RedCharacterSpecs
   m_EditorClassIdentifier: 
   Identifier:
-    Path: QuantumUser/Resources/Shootball/Players/CharacterBlueSpecs
+    Path: QuantumUser/Resources/Shootball/Players/RedCharacterSpecs
     Guid:
-      Value: 298158292151521762
+      Value: 512310765022191897
   Acceleration:
-    RawValue: 1638400
+    RawValue: 983040
   MaxSpeed:
-    RawValue: 196608
+    RawValue: 131072
   RotationSpeed:
     RawValue: 23592960
   MaxStamina:
     RawValue: 6553600
   JumpForce:
-    RawValue: 262144
+    RawValue: 1179648
   SprintMultiplier:
     RawValue: 98304

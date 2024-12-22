@@ -533,22 +533,18 @@ namespace Quantum {
   }
   [StructLayout(LayoutKind.Explicit)]
   public unsafe partial struct CharacterStats : Quantum.IComponent {
-    public const Int32 SIZE = 24;
+    public const Int32 SIZE = 16;
     public const Int32 ALIGNMENT = 8;
     [FieldOffset(0)]
     public AssetRef<CharacterSpecs> Specs;
     [FieldOffset(8)]
     [HideInInspector()]
     public FP CurrentStamina;
-    [FieldOffset(16)]
-    [HideInInspector()]
-    public FP SprintMultiplier;
     public override Int32 GetHashCode() {
       unchecked { 
         var hash = 18671;
         hash = hash * 31 + Specs.GetHashCode();
         hash = hash * 31 + CurrentStamina.GetHashCode();
-        hash = hash * 31 + SprintMultiplier.GetHashCode();
         return hash;
       }
     }
@@ -556,7 +552,6 @@ namespace Quantum {
         var p = (CharacterStats*)ptr;
         AssetRef.Serialize(&p->Specs, serializer);
         FP.Serialize(&p->CurrentStamina, serializer);
-        FP.Serialize(&p->SprintMultiplier, serializer);
     }
   }
   [StructLayout(LayoutKind.Explicit)]

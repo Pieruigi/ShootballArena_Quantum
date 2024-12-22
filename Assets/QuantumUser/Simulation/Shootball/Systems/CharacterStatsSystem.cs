@@ -4,6 +4,8 @@ namespace Quantum.Shootball
     using UnityEngine.Scripting;
     using Quantum;
     using System.Diagnostics;
+    using UnityEngine;
+    using UnityEngine.UI;
 
     [Preserve]
     public unsafe class CharacterStatsSystem : SystemMainThreadFilter<CharacterStatsSystem.Filter>, ISignalOnCharacterSpawned
@@ -11,8 +13,10 @@ namespace Quantum.Shootball
         
         public override void Update(Frame f, ref Filter filter)
         {
+           
         }
 
+        
         public struct Filter
         {
             public EntityRef Entity;
@@ -27,14 +31,8 @@ namespace Quantum.Shootball
 
         public void OnCharacterSpawned(Frame f, EntityRef entity)
         {
-            // Get the CharacterStats component
-            if(f.Unsafe.TryGetPointer<CharacterStats>(entity, out var stats))
-            {
-                // Initialize character controller and other stats
-                stats->Initialize(f, entity);
-            }
+            f.Get<CharacterStats>(entity).Initialize(f, entity);
 
-            //UnityEngine.Debug.Log("Stats component:" + f.Unsafe.GetPointer<CharacterStats>(player)->ToString());
         }
     }
 }

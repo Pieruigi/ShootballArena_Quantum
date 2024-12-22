@@ -16,6 +16,7 @@ namespace Quantum.Shootball
             public EntityRef Entity;
             public CharacterController3D* CharacterController;
             public Transform3D* Transform;
+            public CharacterStats* Stats;
             //public PlayerController* Controller;
         }
 
@@ -40,16 +41,14 @@ namespace Quantum.Shootball
             var cc = filter.CharacterController;
 
             // Move this to a characteer spec config file
-            FP speed = 5;
-            FP acceleration = 8;
-            FP rotationSpeed = 360;
+            var specs = f.FindAsset(filter.Stats->Specs);
 
             // Jump
             if (input->Jump.WasPressed)
                 cc->Jump(f);
 
             // Rotate 
-            filter.Transform->Rotate(FPVector3.Up, input->AimDirection.X * f.DeltaTime * rotationSpeed);
+            filter.Transform->Rotate(FPVector3.Up, input->AimDirection.X * f.DeltaTime * specs.RotationSpeed);
 
             // Compute movement direction
             var moveDirection = filter.Transform->Forward * input->Direction.Y + filter.Transform->Right * input->Direction.X;

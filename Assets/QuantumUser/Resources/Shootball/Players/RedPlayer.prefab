@@ -58,6 +58,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1407316267233719268, guid: 253ce0790aa16214db176044c3eed590,
+        type: 3}
+      propertyPath: Prototype.Config.Id.Value
+      value: 166147179332483656
+      objectReference: {fileID: 0}
     - target: {fileID: 3516481846594518793, guid: 253ce0790aa16214db176044c3eed590,
         type: 3}
       propertyPath: m_Materials.Array.data[0]
@@ -81,7 +86,7 @@ PrefabInstance:
     - target: {fileID: 7756521477178576537, guid: 253ce0790aa16214db176044c3eed590,
         type: 3}
       propertyPath: m_Name
-      value: PlayerRed Variant
+      value: RedPlayer
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
