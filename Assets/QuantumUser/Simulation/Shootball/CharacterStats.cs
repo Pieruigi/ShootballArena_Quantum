@@ -1,5 +1,6 @@
 using Photon.Deterministic;
 using Quantum.Shootball;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -28,6 +29,30 @@ namespace Quantum
             Debug.Log($"JumpForce:{f.FindAsset(cc->Config).BaseJumpImpulse}");
             // Set other values
             CurrentStamina = specs.MaxStamina;
+          
+        }
+
+        public unsafe void SetSprinting(Frame f, EntityRef entity, bool value)
+        {
+            // Get the character controller
+            var cc = f.Unsafe.GetPointer<CharacterController3D>(entity);
+
+            // Get config
+            var config = f.FindAsset(cc->Config);
+
+            // Get specs
+            var specs = f.FindAsset(Specs);
+
+            // Compute multiplier
+            FP mul = 1;
+            if (value)
+            {
+                mul = specs.SprintMultiplier;
+            }
+            // Update max speed
+            config.MaxSpeed = specs.MaxSpeed * mul;
+            // Set updated config
+            cc->SetConfig((FrameThreadSafe)f, config);
         }
     }
 }

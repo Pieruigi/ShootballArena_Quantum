@@ -47,6 +47,13 @@ namespace Quantum.Shootball
             if (input->Jump.WasPressed)
                 cc->Jump(f);
 
+            // Check if the player is sprinting
+            if (input->Sprint.WasPressed)
+                filter.Stats->SetSprinting(f, filter.Entity, true);
+            else if (input->Sprint.WasReleased)
+                filter.Stats->SetSprinting(f, filter.Entity, false);
+            
+
             // Rotate 
             filter.Transform->Rotate(FPVector3.Up, input->AimDirection.X * f.DeltaTime * specs.RotationSpeed);
 
