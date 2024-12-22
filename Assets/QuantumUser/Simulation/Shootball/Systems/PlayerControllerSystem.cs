@@ -6,6 +6,7 @@ namespace Quantum.Shootball
     using System;
     using static UnityEngine.EventSystems.EventTrigger;
     using System.Diagnostics;
+    using UnityEngine.UIElements;
 
     [Preserve]
     public unsafe class PlayerControllerSystem : SystemMainThreadFilter<PlayerControllerSystem.Filter>
@@ -38,15 +39,23 @@ namespace Quantum.Shootball
             // Get character controller
             var cc = filter.CharacterController;
 
+            // Move this to a characteer spec config file
             FP speed = 5;
             FP acceleration = 8;
+            FP rotationSpeed = 360;
 
+            // Jump
             if (input->Jump.WasPressed)
                 cc->Jump(f);
 
+            // Rotate 
+            filter.Transform->Rotate(FPVector3.Up, input->AimDirection.X * f.DeltaTime * rotationSpeed);
 
+            // Compute movement direction
+            var moveDirection = filter.Transform->Forward * input->Direction.Y + filter.Transform->Right * input->Direction.X;
 
-            cc->Move(f, filter.Entity, input->Direction.Normalized.XOY);
+            // Move
+            cc->Move(f, filter.Entity, moveDirection.Normalized);
         }
 
         

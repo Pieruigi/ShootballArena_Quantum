@@ -9,8 +9,10 @@ namespace Quantum.Shootball
     /// Every time a new player is added to the simulation this class creates the corresponding character.
     /// </summary>
     [Preserve]
-    public unsafe class PlayerSpawnSystem : SystemSignalsOnly, ISignalOnPlayerAdded
+    public unsafe class CharacterSpawnSystem : SystemSignalsOnly, ISignalOnPlayerAdded
     {
+      
+
         public void OnPlayerAdded(Frame f, PlayerRef player, bool firstTime)
         {
             // Get the runtime player data
@@ -32,6 +34,8 @@ namespace Quantum.Shootball
                 t->Teleport(f, t->Position);
             }
 
+            // Send sinal
+            f.Signals.OnCharacterSpawned(entity);
         }
     }
 }

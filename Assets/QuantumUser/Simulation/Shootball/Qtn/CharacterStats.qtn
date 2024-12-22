@@ -1,0 +1,12 @@
+using Quantum.Shootball;
+component CharacterStats
+{
+    AssetRef<CharacterSpecs> Specs;
+
+    [HideInInspector]
+    FP CurrentStamina;
+    [HideInInspector]
+    FP SprintMultiplier;
+   
+    
+}

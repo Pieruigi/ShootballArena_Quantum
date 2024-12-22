@@ -179,6 +179,7 @@ GameObject:
   - component: {fileID: 4915859897733297296}
   - component: {fileID: 5032797722333819039}
   - component: {fileID: 1407316267233719268}
+  - component: {fileID: 7305175163422430978}
   m_Layer: 0
   m_Name: PlayerBlue
   m_TagString: Untagged
@@ -403,3 +404,23 @@ MonoBehaviour:
     Config:
       Id:
         Value: 166147179332483656
+--- !u!114 &7305175163422430978
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7756521477178576537}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a1d61c7ffc77dde4c9e78d935623dac0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Prototype:
+    Specs:
+      Id:
+        Value: 298158292151521762
+    CurrentStamina:
+      RawValue: 0
+    SprintMultiplier:
+      RawValue: 104858

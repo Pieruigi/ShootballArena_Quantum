@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using Quantum;
 using System;
-using UnityEditor.PackageManager;
 using System.Threading.Tasks;
 using Photon.Realtime;
 using UnityEngine.SceneManagement;

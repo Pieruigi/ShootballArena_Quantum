@@ -22,6 +22,8 @@ namespace Quantum.Shootball
         {
             Input i = new Input();
 
+            
+
             // Get input
             float x = UnityEngine.Input.GetAxis("Horizontal");
             float y = UnityEngine.Input.GetAxis("Vertical");
@@ -29,11 +31,11 @@ namespace Quantum.Shootball
             bool sprint = UnityEngine.Input.GetKey(KeyBindings.SprintKey);
             bool fire1 = UnityEngine.Input.GetKey(KeyBindings.Fire1Key);
             bool fire2 = UnityEngine.Input.GetKey(KeyBindings.Fire2Key);
-            
+            float aimX = UnityEngine.Input.GetAxis("Mouse X");
+            float aimY = UnityEngine.Input.GetAxis("Mouse Y");
 
             i.Direction = new FPVector2(x.ToFP(), y.ToFP());
-            i.Yaw = 0;
-            i.Pitch = 0;
+            i.AimDirection = new FPVector2(aimX.ToFP(), aimY.ToFP());
             i.Jump = jump;
             i.Sprint = sprint;
             i.Fire1 = fire1;

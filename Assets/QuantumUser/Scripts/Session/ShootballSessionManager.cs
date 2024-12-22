@@ -17,22 +17,22 @@ namespace Quantum.Shootball
         // Start is called before the first frame update
         void Start()
         {
-#if UNITY_EDITOR
+//#if UNITY_EDITOR
             // Move this configuration where player choose the type of game
             ShootballSessionInfo.Map = Utility.GetAssetRef<Map>("Shootball/Maps/DefaultArenaMap");
             ShootballSessionInfo.SimulationConfig = Utility.GetAssetRef<SimulationConfig>("Shootball/Config/ShootballSimulationConfig");
             ShootballSessionInfo.SystemsConfig = Utility.GetAssetRef<SystemsConfig>("Shootball/Config/ShootballSystemConfig");
-            //Debug.Log($"SystemsConfig:{ShootballSessionInfo.SystemsConfig.Id}, isValid:{ShootballSessionInfo.SystemsConfig.IsValid}");
+          
             ShootballSessionInfo.GameMode = Utility.GetAssetRef<GameMode>("Shootball/GameModes/ClassicGameMode");
             ShootballSessionInfo.NumOfPlayers = 2;
             ShootballSessionInfo.SessionName = "shootball_test_session";
 
             // Player
             ShootballPlayerInfo.PlayerName = "Player-1";
-            ShootballPlayerInfo.EntityPrototypeAssetRef = Utility.GetAssetRef<EntityPrototype>("Shootball/Players/PlayerBlueEntityPrototype");
+            ShootballPlayerInfo.EntityPrototypeAssetRef = Utility.GetAssetRef<EntityPrototype>("Shootball/Players/PlayerRedEntityPrototype");
             Debug.Log($"Player:{ShootballPlayerInfo.EntityPrototypeAssetRef}, isValid:{ShootballSessionInfo.SystemsConfig.IsValid}");
             //QuantumRunner.Default.Session
-#endif
+//#endif
         }
 
         private void OnEnable()
@@ -69,13 +69,13 @@ namespace Quantum.Shootball
                 // The Photon application settings
                 PhotonSettings = PhotonServerSettings.Global.AppSettings,
                 //Will be configured as "EnterRoomArgs.RoomOptions.PlayerTtl" when creating a Photon room
-                PlayerTtlInSeconds = 10,
+                //PlayerTtlInSeconds = 10,
                 //Will be configured as "EnterRoomArgs.RoomOptions.EmptyRoomTtl" when creating a Photon room
-                EmptyRoomTtlInSeconds = 10,
+                //EmptyRoomTtlInSeconds = 10,
                 // Will be configured as "EnterRoomArgs.RoomOptions.RoomName when creating a Photon room.
-                RoomName = ShootballSessionInfo.SessionName,
+                RoomName = "QRoom",   //ShootballSessionInfo.SessionName,
                 // The maximum number of clients for the room, in this case we use the code-generated max possible players for the Quantum simulation
-                MaxPlayers = ShootballSessionInfo.NumOfPlayers,
+                MaxPlayers = 2,//ShootballSessionInfo.NumOfPlayers,
                 // Configure if the connect request can also create rooms or if it only tries to join
                 CanOnlyJoin = false,
                 // Custom room properties that are configured as "EnterRoomArgs.RoomOptions.CustomRoomProperties"
@@ -87,9 +87,9 @@ namespace Quantum.Shootball
                 // The plugin to request from the Photon cloud
                 PluginName = "QuantumPlugin",
                 //Optional object to save and load reconnect information
-                ReconnectInformation = new MatchmakingReconnectInformation(),
+                //ReconnectInformation = new MatchmakingReconnectInformation(),
                 //Optional Realtime lobby to use for matchmaking
-                Lobby = new TypedLobby(),
+                //Lobby = new TypedLobby(),
                 // This sets the AuthValues and should be replaced with the custom authentication
                 UserId = Guid.NewGuid().ToString(),
             };
@@ -119,9 +119,10 @@ namespace Quantum.Shootball
                 // A secret user id that is for example used to reserved player slots to reconnect into a running session
                 ClientId = Client.UserId,
                 SessionConfig = QuantumDeterministicSessionConfigAsset.DefaultConfig,
-                PlayerCount = 1,
-                StartGameTimeoutInSeconds = 10,
+                PlayerCount = 2,//ShootballSessionInfo.NumOfPlayers,
+                StartGameTimeoutInSeconds = 30, // TODO: we must use WaitForGameStart()
                 Communicator = new QuantumNetworkCommunicator(Client),
+                GameMode = Photon.Deterministic.DeterministicGameMode.Multiplayer,
 
                 // RuntimeConfig info
                 RuntimeConfig = new RuntimeConfig()

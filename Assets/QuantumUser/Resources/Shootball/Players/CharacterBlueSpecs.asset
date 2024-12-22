@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2cdc6a7bc16f1ca4ab24355fb6b5d217, type: 3}
+  m_Name: CharacterBlueSpecs
+  m_EditorClassIdentifier: 
+  Identifier:
+    Path: QuantumUser/Resources/Shootball/Players/CharacterBlueSpecs
+    Guid:
+      Value: 298158292151521762
+  Acceleration:
+    RawValue: 1638400
+  MaxSpeed:
+    RawValue: 196608
+  RotationSpeed:
+    RawValue: 23592960
+  MaxStamina:
+    RawValue: 6553600
+  JumpForce:
+    RawValue: 262144
+  SprintMultiplier:
+    RawValue: 98304

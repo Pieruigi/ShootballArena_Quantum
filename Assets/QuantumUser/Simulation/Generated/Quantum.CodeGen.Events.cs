@@ -11,6 +11,7 @@
 
 
 namespace Quantum {
+  using Quantum.Shootball;
   using Photon.Deterministic;
   using Quantum;
   using Quantum.Core;

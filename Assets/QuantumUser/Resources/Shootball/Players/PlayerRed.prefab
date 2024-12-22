@@ -63,6 +63,21 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 0bf9ce722563a81489191369b298d11b, type: 2}
+    - target: {fileID: 7305175163422430978, guid: 253ce0790aa16214db176044c3eed590,
+        type: 3}
+      propertyPath: Prototype.Specs.Id.Value
+      value: 512310765022191897
+      objectReference: {fileID: 0}
+    - target: {fileID: 7305175163422430978, guid: 253ce0790aa16214db176044c3eed590,
+        type: 3}
+      propertyPath: Prototype.MaxSpeed.RawValue
+      value: 262144
+      objectReference: {fileID: 0}
+    - target: {fileID: 7305175163422430978, guid: 253ce0790aa16214db176044c3eed590,
+        type: 3}
+      propertyPath: Prototype.Acceleration.RawValue
+      value: 1310720
+      objectReference: {fileID: 0}
     - target: {fileID: 7756521477178576537, guid: 253ce0790aa16214db176044c3eed590,
         type: 3}
       propertyPath: m_Name

@@ -1,8 +1,7 @@
 input
 {
     Byte EncodedDirection;
-    FP Yaw;
-    FP Pitch;
+    FPVector2 AimDirection;
     button Jump;
     button Sprint;
     button Fire1;

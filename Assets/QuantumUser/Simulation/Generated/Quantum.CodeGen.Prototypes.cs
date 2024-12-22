@@ -11,6 +11,7 @@
 
 
 namespace Quantum.Prototypes {
+  using Quantum.Shootball;
   using Photon.Deterministic;
   using Quantum;
   using Quantum.Core;
@@ -50,11 +51,31 @@ namespace Quantum.Prototypes {
   #endif //;
   
   [System.SerializableAttribute()]
+  [Quantum.Prototypes.Prototype(typeof(Quantum.CharacterStats))]
+  public unsafe partial class CharacterStatsPrototype : ComponentPrototype<Quantum.CharacterStats> {
+    public AssetRef<CharacterSpecs> Specs;
+    [HideInInspector()]
+    public FP CurrentStamina;
+    [HideInInspector()]
+    public FP SprintMultiplier;
+    partial void MaterializeUser(Frame frame, ref Quantum.CharacterStats result, in PrototypeMaterializationContext context);
+    public override Boolean AddToEntity(FrameBase f, EntityRef entity, in PrototypeMaterializationContext context) {
+        Quantum.CharacterStats component = default;
+        Materialize((Frame)f, ref component, in context);
+        return f.Set(entity, component) == SetResult.ComponentAdded;
+    }
+    public void Materialize(Frame frame, ref Quantum.CharacterStats result, in PrototypeMaterializationContext context = default) {
+        result.Specs = this.Specs;
+        result.CurrentStamina = this.CurrentStamina;
+        result.SprintMultiplier = this.SprintMultiplier;
+        MaterializeUser(frame, ref result, in context);
+    }
+  }
+  [System.SerializableAttribute()]
   [Quantum.Prototypes.Prototype(typeof(Quantum.Input))]
   public unsafe partial class InputPrototype : StructPrototype {
     public Byte EncodedDirection;
-    public FP Yaw;
-    public FP Pitch;
+    public FPVector2 AimDirection;
     public Button Jump;
     public Button Sprint;
     public Button Fire1;
@@ -62,8 +83,7 @@ namespace Quantum.Prototypes {
     partial void MaterializeUser(Frame frame, ref Quantum.Input result, in PrototypeMaterializationContext context);
     public void Materialize(Frame frame, ref Quantum.Input result, in PrototypeMaterializationContext context = default) {
         result.EncodedDirection = this.EncodedDirection;
-        result.Yaw = this.Yaw;
-        result.Pitch = this.Pitch;
+        result.AimDirection = this.AimDirection;
         result.Jump = this.Jump;
         result.Sprint = this.Sprint;
         result.Fire1 = this.Fire1;
