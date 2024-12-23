@@ -555,19 +555,37 @@ namespace Quantum {
     }
   }
   [StructLayout(LayoutKind.Explicit)]
-  public unsafe partial struct PlayerController : Quantum.IComponent {
-    public const Int32 SIZE = 4;
-    public const Int32 ALIGNMENT = 4;
+  public unsafe partial struct PlayerAim : Quantum.IComponent {
+    public const Int32 SIZE = 40;
+    public const Int32 ALIGNMENT = 8;
     [FieldOffset(0)]
-    private fixed Byte _alignment_padding_[4];
+    public EntityRef CharacterRef;
+    [FieldOffset(32)]
+    public FP Pitch;
+    [FieldOffset(16)]
+    public FP Height;
+    [FieldOffset(8)]
+    public FP Distance;
+    [FieldOffset(24)]
+    public FP HorizontalOffset;
     public override Int32 GetHashCode() {
       unchecked { 
-        var hash = 7937;
+        var hash = 19219;
+        hash = hash * 31 + CharacterRef.GetHashCode();
+        hash = hash * 31 + Pitch.GetHashCode();
+        hash = hash * 31 + Height.GetHashCode();
+        hash = hash * 31 + Distance.GetHashCode();
+        hash = hash * 31 + HorizontalOffset.GetHashCode();
         return hash;
       }
     }
     public static void Serialize(void* ptr, FrameSerializer serializer) {
-        var p = (PlayerController*)ptr;
+        var p = (PlayerAim*)ptr;
+        EntityRef.Serialize(&p->CharacterRef, serializer);
+        FP.Serialize(&p->Distance, serializer);
+        FP.Serialize(&p->Height, serializer);
+        FP.Serialize(&p->HorizontalOffset, serializer);
+        FP.Serialize(&p->Pitch, serializer);
     }
   }
   [StructLayout(LayoutKind.Explicit)]
@@ -669,8 +687,8 @@ namespace Quantum {
       BuildSignalsArrayOnComponentRemoved<PhysicsJoints2D>();
       BuildSignalsArrayOnComponentAdded<PhysicsJoints3D>();
       BuildSignalsArrayOnComponentRemoved<PhysicsJoints3D>();
-      BuildSignalsArrayOnComponentAdded<Quantum.PlayerController>();
-      BuildSignalsArrayOnComponentRemoved<Quantum.PlayerController>();
+      BuildSignalsArrayOnComponentAdded<Quantum.PlayerAim>();
+      BuildSignalsArrayOnComponentRemoved<Quantum.PlayerAim>();
       BuildSignalsArrayOnComponentAdded<Quantum.PlayerLink>();
       BuildSignalsArrayOnComponentRemoved<Quantum.PlayerLink>();
       BuildSignalsArrayOnComponentAdded<Quantum.Test>();
@@ -788,7 +806,7 @@ namespace Quantum {
       typeRegistry.Register(typeof(PhysicsJoints3D), PhysicsJoints3D.SIZE);
       typeRegistry.Register(typeof(PhysicsQueryRef), PhysicsQueryRef.SIZE);
       typeRegistry.Register(typeof(PhysicsSceneSettings), PhysicsSceneSettings.SIZE);
-      typeRegistry.Register(typeof(Quantum.PlayerController), Quantum.PlayerController.SIZE);
+      typeRegistry.Register(typeof(Quantum.PlayerAim), Quantum.PlayerAim.SIZE);
       typeRegistry.Register(typeof(Quantum.PlayerLink), Quantum.PlayerLink.SIZE);
       typeRegistry.Register(typeof(PlayerRef), PlayerRef.SIZE);
       typeRegistry.Register(typeof(Ptr), Ptr.SIZE);
@@ -811,7 +829,7 @@ namespace Quantum {
       ComponentTypeId.Reset(ComponentTypeId.BuiltInComponentCount + 4)
         .AddBuiltInComponents()
         .Add<Quantum.CharacterStats>(Quantum.CharacterStats.Serialize, null, null, ComponentFlags.None)
-        .Add<Quantum.PlayerController>(Quantum.PlayerController.Serialize, null, null, ComponentFlags.None)
+        .Add<Quantum.PlayerAim>(Quantum.PlayerAim.Serialize, null, null, ComponentFlags.None)
         .Add<Quantum.PlayerLink>(Quantum.PlayerLink.Serialize, null, null, ComponentFlags.None)
         .Add<Quantum.Test>(Quantum.Test.Serialize, null, null, ComponentFlags.None)
         .Finish();

@@ -14,6 +14,8 @@ namespace Quantum.Shootball
 
         public static AssetRef<EntityPrototype> EntityPrototypeAssetRef { get; set; }
 
+
+
     }
 
 }

@@ -58,7 +58,12 @@ MonoBehaviour:
     StartDisabled: 0
     Children: []
   - SystemType:
-      AssemblyQualifiedName: Quantum.Shootball.PlayerControllerSystem, Quantum.Simulation
+      AssemblyQualifiedName: Quantum.Shootball.PlayerMovementSystem, Quantum.Simulation
+    SystemName: 
+    StartDisabled: 0
+    Children: []
+  - SystemType:
+      AssemblyQualifiedName: Quantum.Shootball.PlayerAimSystem, Quantum.Simulation
     SystemName: 
     StartDisabled: 0
     Children: []

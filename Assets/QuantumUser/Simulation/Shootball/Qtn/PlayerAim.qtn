@@ -1,0 +1,9 @@
+component PlayerAim 
+{
+    EntityRef CharacterRef;
+    
+    FP Pitch;
+    FP Height;
+    FP Distance;
+    FP HorizontalOffset;
+}

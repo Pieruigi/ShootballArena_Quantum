@@ -50,6 +50,25 @@ namespace Quantum.Prototypes.Unity {
   using RuntimeInitializeOnLoadMethodAttribute = UnityEngine.RuntimeInitializeOnLoadMethodAttribute;
   #endif //;
   
+  [System.SerializableAttribute()]
+  public unsafe partial class PlayerAimPrototype : Quantum.QuantumUnityPrototypeAdapter<Quantum.Prototypes.PlayerAimPrototype> {
+    public Quantum.QuantumEntityPrototype CharacterRef;
+    public FP Pitch;
+    public FP Height;
+    public FP Distance;
+    public FP HorizontalOffset;
+    partial void ConvertUser(Quantum.QuantumEntityPrototypeConverter converter, ref Quantum.Prototypes.PlayerAimPrototype prototype);
+    public override Quantum.Prototypes.PlayerAimPrototype Convert(Quantum.QuantumEntityPrototypeConverter converter) {
+      var result = new Quantum.Prototypes.PlayerAimPrototype();
+      converter.Convert(this.CharacterRef, out result.CharacterRef);
+      converter.Convert(this.Pitch, out result.Pitch);
+      converter.Convert(this.Height, out result.Height);
+      converter.Convert(this.Distance, out result.Distance);
+      converter.Convert(this.HorizontalOffset, out result.HorizontalOffset);
+      ConvertUser(converter, ref result);
+      return result;
+    }
+  }
 }
 #pragma warning restore 0109
 #pragma warning restore 1591

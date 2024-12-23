@@ -9,7 +9,7 @@ namespace Quantum.Shootball
     using UnityEngine.UIElements;
 
     [Preserve]
-    public unsafe class PlayerControllerSystem : SystemMainThreadFilter<PlayerControllerSystem.Filter>
+    public unsafe class PlayerMovementSystem : SystemMainThreadFilter<PlayerMovementSystem.Filter>
     {
         public struct Filter
         {
@@ -17,7 +17,6 @@ namespace Quantum.Shootball
             public CharacterController3D* CharacterController;
             public Transform3D* Transform;
             public CharacterStats* Stats;
-            //public PlayerController* Controller;
         }
 
         public override void Update(Frame f, ref Filter filter)

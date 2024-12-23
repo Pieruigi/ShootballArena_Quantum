@@ -27,4 +27,4 @@ MonoBehaviour:
   JumpForce:
     RawValue: 262144
   SprintMultiplier:
-    RawValue: 98304
+    RawValue: 163840

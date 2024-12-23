@@ -32,6 +32,7 @@ namespace Quantum.Shootball
             ShootballPlayerInfo.EntityPrototypeAssetRef = Utility.GetAssetRef<EntityPrototype>("Shootball/Players/BluePlayerEntityPrototype");
             Debug.Log($"Player:{ShootballPlayerInfo.EntityPrototypeAssetRef}, isValid:{ShootballSessionInfo.SystemsConfig.IsValid}");
             //QuantumRunner.Default.Session
+
 //#endif
         }
 
@@ -131,8 +132,8 @@ namespace Quantum.Shootball
                     Seed = DateTime.Now.Millisecond,
                     SystemsConfig = ShootballSessionInfo.SystemsConfig,
                     SimulationConfig = ShootballSessionInfo.SimulationConfig,
-                    GameMode = ShootballSessionInfo.GameMode
-                  
+                    GameMode = ShootballSessionInfo.GameMode,
+                    PlayerAimEntityPrototype = Utility.GetAssetRef<EntityPrototype>("Shootball/PlayerAimEntityPrototype")
                 }
             };
 
@@ -148,6 +149,7 @@ namespace Quantum.Shootball
                 {
                     PlayerAvatar = ShootballPlayerInfo.EntityPrototypeAssetRef,
                     PlayerNickname = ShootballPlayerInfo.PlayerName
+                    
                 };
                 runner.Game.AddPlayer(runtimePlayer);
                 callback?.Invoke(true);
