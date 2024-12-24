@@ -51,6 +51,8 @@ namespace Quantum.Shootball
             transform.rotation = Quaternion.Euler(0, aim.Yaw.AsFloat + localInput.YawDelta, 0);
             cameraTarget.localRotation = Quaternion.Euler(aim.Pitch.AsFloat + localInput.PitchDelta, 0, 0);
         }
+
+
     }
 
 }
