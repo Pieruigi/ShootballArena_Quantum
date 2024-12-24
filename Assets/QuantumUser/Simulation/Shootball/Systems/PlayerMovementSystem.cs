@@ -17,6 +17,7 @@ namespace Quantum.Shootball
             public CharacterController3D* CharacterController;
             public Transform3D* Transform;
             public CharacterStats* Stats;
+            public PlayerAim* Aim;
         }
 
         public override void Update(Frame f, ref Filter filter)
@@ -51,16 +52,24 @@ namespace Quantum.Shootball
                 filter.Stats->SetSprinting(f, filter.Entity, true);
             else if (input->Sprint.WasReleased)
                 filter.Stats->SetSprinting(f, filter.Entity, false);
-            
 
-            // Rotate 
-            filter.Transform->Rotate(FPVector3.Up, input->AimDirection.X * f.DeltaTime * specs.RotationSpeed);
+            // Update aim component
+            filter.Aim->Yaw += input->YawDelta;
+            filter.Aim->Pitch += input->PitchDelta;
+
+            // Rotate
+            filter.Transform->Rotation = FPQuaternion.Euler(0, filter.Aim->Yaw, 0);
 
             // Compute movement direction
-            var moveDirection = filter.Transform->Forward * input->Direction.Y + filter.Transform->Right * input->Direction.X;
+            var moveDirection = filter.Transform->TransformDirection(input->Direction.XOY);
+
+            // Clamp direction magnitude eventually
+            if(moveDirection.Magnitude > 1)
+                moveDirection = moveDirection.Normalized;
 
             // Move
-            cc->Move(f, filter.Entity, moveDirection.Normalized);
+            cc->Move(f, filter.Entity, moveDirection);
+                        
         }
 
         

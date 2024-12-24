@@ -3,7 +3,7 @@ component CharacterStats
 {
     AssetRef<CharacterSpecs> Specs;
 
-    [HideInInspector]
+    [ReadOnly]
     FP CurrentStamina;
 
  

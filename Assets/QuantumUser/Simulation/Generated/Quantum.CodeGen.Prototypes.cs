@@ -54,7 +54,7 @@ namespace Quantum.Prototypes {
   [Quantum.Prototypes.Prototype(typeof(Quantum.CharacterStats))]
   public unsafe partial class CharacterStatsPrototype : ComponentPrototype<Quantum.CharacterStats> {
     public AssetRef<CharacterSpecs> Specs;
-    [HideInInspector()]
+    [ReadOnly()]
     public FP CurrentStamina;
     partial void MaterializeUser(Frame frame, ref Quantum.CharacterStats result, in PrototypeMaterializationContext context);
     public override Boolean AddToEntity(FrameBase f, EntityRef entity, in PrototypeMaterializationContext context) {
@@ -72,7 +72,8 @@ namespace Quantum.Prototypes {
   [Quantum.Prototypes.Prototype(typeof(Quantum.Input))]
   public unsafe partial class InputPrototype : StructPrototype {
     public Byte EncodedDirection;
-    public FPVector2 AimDirection;
+    public FP YawDelta;
+    public FP PitchDelta;
     public Button Jump;
     public Button Sprint;
     public Button Fire1;
@@ -80,7 +81,8 @@ namespace Quantum.Prototypes {
     partial void MaterializeUser(Frame frame, ref Quantum.Input result, in PrototypeMaterializationContext context);
     public void Materialize(Frame frame, ref Quantum.Input result, in PrototypeMaterializationContext context = default) {
         result.EncodedDirection = this.EncodedDirection;
-        result.AimDirection = this.AimDirection;
+        result.YawDelta = this.YawDelta;
+        result.PitchDelta = this.PitchDelta;
         result.Jump = this.Jump;
         result.Sprint = this.Sprint;
         result.Fire1 = this.Fire1;
@@ -90,28 +92,27 @@ namespace Quantum.Prototypes {
   }
   [System.SerializableAttribute()]
   [Quantum.Prototypes.Prototype(typeof(Quantum.PlayerAim))]
-  public unsafe class PlayerAimPrototype : ComponentPrototype<Quantum.PlayerAim> {
-    public MapEntityId CharacterRef;
+  public unsafe partial class PlayerAimPrototype : ComponentPrototype<Quantum.PlayerAim> {
+    [ReadOnly()]
     public FP Pitch;
-    public FP Height;
-    public FP Distance;
-    public FP HorizontalOffset;
+    [ReadOnly()]
+    public FP Yaw;
+    partial void MaterializeUser(Frame frame, ref Quantum.PlayerAim result, in PrototypeMaterializationContext context);
     public override Boolean AddToEntity(FrameBase f, EntityRef entity, in PrototypeMaterializationContext context) {
         Quantum.PlayerAim component = default;
         Materialize((Frame)f, ref component, in context);
         return f.Set(entity, component) == SetResult.ComponentAdded;
     }
     public void Materialize(Frame frame, ref Quantum.PlayerAim result, in PrototypeMaterializationContext context = default) {
-        PrototypeValidator.FindMapEntity(this.CharacterRef, in context, out result.CharacterRef);
         result.Pitch = this.Pitch;
-        result.Height = this.Height;
-        result.Distance = this.Distance;
-        result.HorizontalOffset = this.HorizontalOffset;
+        result.Yaw = this.Yaw;
+        MaterializeUser(frame, ref result, in context);
     }
   }
   [System.SerializableAttribute()]
   [Quantum.Prototypes.Prototype(typeof(Quantum.PlayerLink))]
   public unsafe partial class PlayerLinkPrototype : ComponentPrototype<Quantum.PlayerLink> {
+    [ReadOnly()]
     public PlayerRef PlayerRef;
     partial void MaterializeUser(Frame frame, ref Quantum.PlayerLink result, in PrototypeMaterializationContext context);
     public override Boolean AddToEntity(FrameBase f, EntityRef entity, in PrototypeMaterializationContext context) {

@@ -9,6 +9,5 @@ namespace Quantum
     {
         public AssetRef<Quantum.Shootball.GameMode> GameMode;
 
-        public AssetRef<EntityPrototype> PlayerAimEntityPrototype;
     }
 }

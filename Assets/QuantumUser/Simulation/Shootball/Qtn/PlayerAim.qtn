@@ -1,9 +1,8 @@
 component PlayerAim 
 {
-    EntityRef CharacterRef;
-    
+    [ReadOnly]
     FP Pitch;
-    FP Height;
-    FP Distance;
-    FP HorizontalOffset;
+    [ReadOnly]
+    FP Yaw;
+    
 }

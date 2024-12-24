@@ -132,8 +132,8 @@ namespace Quantum.Shootball
                     Seed = DateTime.Now.Millisecond,
                     SystemsConfig = ShootballSessionInfo.SystemsConfig,
                     SimulationConfig = ShootballSessionInfo.SimulationConfig,
-                    GameMode = ShootballSessionInfo.GameMode,
-                    PlayerAimEntityPrototype = Utility.GetAssetRef<EntityPrototype>("Shootball/PlayerAimEntityPrototype")
+                    GameMode = ShootballSessionInfo.GameMode
+                    
                 }
             };
 

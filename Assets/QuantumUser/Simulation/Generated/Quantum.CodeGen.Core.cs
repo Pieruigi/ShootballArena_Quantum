@@ -410,21 +410,24 @@ namespace Quantum {
     public const Int32 ALIGNMENT = 8;
     [FieldOffset(0)]
     public Byte EncodedDirection;
-    [FieldOffset(56)]
-    public FPVector2 AimDirection;
-    [FieldOffset(28)]
-    public Button Jump;
-    [FieldOffset(40)]
-    public Button Sprint;
-    [FieldOffset(4)]
-    public Button Fire1;
     [FieldOffset(16)]
+    public FP YawDelta;
+    [FieldOffset(8)]
+    public FP PitchDelta;
+    [FieldOffset(48)]
+    public Button Jump;
+    [FieldOffset(60)]
+    public Button Sprint;
+    [FieldOffset(24)]
+    public Button Fire1;
+    [FieldOffset(36)]
     public Button Fire2;
     public override Int32 GetHashCode() {
       unchecked { 
         var hash = 19249;
         hash = hash * 31 + EncodedDirection.GetHashCode();
-        hash = hash * 31 + AimDirection.GetHashCode();
+        hash = hash * 31 + YawDelta.GetHashCode();
+        hash = hash * 31 + PitchDelta.GetHashCode();
         hash = hash * 31 + Jump.GetHashCode();
         hash = hash * 31 + Sprint.GetHashCode();
         hash = hash * 31 + Fire1.GetHashCode();
@@ -456,11 +459,12 @@ namespace Quantum {
     static partial void SerializeCodeGen(void* ptr, FrameSerializer serializer) {
         var p = (Input*)ptr;
         serializer.Stream.Serialize(&p->EncodedDirection);
+        FP.Serialize(&p->PitchDelta, serializer);
+        FP.Serialize(&p->YawDelta, serializer);
         Button.Serialize(&p->Fire1, serializer);
         Button.Serialize(&p->Fire2, serializer);
         Button.Serialize(&p->Jump, serializer);
         Button.Serialize(&p->Sprint, serializer);
-        FPVector2.Serialize(&p->AimDirection, serializer);
     }
   }
   [StructLayout(LayoutKind.Explicit)]
@@ -538,7 +542,7 @@ namespace Quantum {
     [FieldOffset(0)]
     public AssetRef<CharacterSpecs> Specs;
     [FieldOffset(8)]
-    [HideInInspector()]
+    [ReadOnly()]
     public FP CurrentStamina;
     public override Int32 GetHashCode() {
       unchecked { 
@@ -556,36 +560,26 @@ namespace Quantum {
   }
   [StructLayout(LayoutKind.Explicit)]
   public unsafe partial struct PlayerAim : Quantum.IComponent {
-    public const Int32 SIZE = 40;
+    public const Int32 SIZE = 16;
     public const Int32 ALIGNMENT = 8;
     [FieldOffset(0)]
-    public EntityRef CharacterRef;
-    [FieldOffset(32)]
+    [ReadOnly()]
     public FP Pitch;
-    [FieldOffset(16)]
-    public FP Height;
     [FieldOffset(8)]
-    public FP Distance;
-    [FieldOffset(24)]
-    public FP HorizontalOffset;
+    [ReadOnly()]
+    public FP Yaw;
     public override Int32 GetHashCode() {
       unchecked { 
         var hash = 19219;
-        hash = hash * 31 + CharacterRef.GetHashCode();
         hash = hash * 31 + Pitch.GetHashCode();
-        hash = hash * 31 + Height.GetHashCode();
-        hash = hash * 31 + Distance.GetHashCode();
-        hash = hash * 31 + HorizontalOffset.GetHashCode();
+        hash = hash * 31 + Yaw.GetHashCode();
         return hash;
       }
     }
     public static void Serialize(void* ptr, FrameSerializer serializer) {
         var p = (PlayerAim*)ptr;
-        EntityRef.Serialize(&p->CharacterRef, serializer);
-        FP.Serialize(&p->Distance, serializer);
-        FP.Serialize(&p->Height, serializer);
-        FP.Serialize(&p->HorizontalOffset, serializer);
         FP.Serialize(&p->Pitch, serializer);
+        FP.Serialize(&p->Yaw, serializer);
     }
   }
   [StructLayout(LayoutKind.Explicit)]
@@ -593,6 +587,7 @@ namespace Quantum {
     public const Int32 SIZE = 4;
     public const Int32 ALIGNMENT = 4;
     [FieldOffset(0)]
+    [ReadOnly()]
     public PlayerRef PlayerRef;
     public override Int32 GetHashCode() {
       unchecked { 
@@ -706,7 +701,8 @@ namespace Quantum {
       if ((int)player >= (int)_globals->input.Length) { throw new System.ArgumentOutOfRangeException("player"); }
       var i = _globals->input.GetPointer(player);
       i->EncodedDirection = input.EncodedDirection;
-      i->AimDirection = input.AimDirection;
+      i->YawDelta = input.YawDelta;
+      i->PitchDelta = input.PitchDelta;
       i->Jump = i->Jump.Update(this.Number, input.Jump);
       i->Sprint = i->Sprint.Update(this.Number, input.Sprint);
       i->Fire1 = i->Fire1.Update(this.Number, input.Fire1);
