@@ -171,9 +171,6 @@ MonoBehaviour:
     GameMode:
       Id:
         Value: 0
-    PlayerAimEntityPrototype:
-      Id:
-        Value: 0
   SessionConfig: {fileID: 11400000, guid: 1d995be352b55d542b0d205d0be0b313, type: 2}
   LocalPlayers: []
   MaxPlayerCount: 0
@@ -1939,7 +1936,6 @@ GameObject:
   - component: {fileID: 351927104}
   - component: {fileID: 351927103}
   - component: {fileID: 351927106}
-  - component: {fileID: 351927107}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -2065,18 +2061,6 @@ MonoBehaviour:
     m_MipBias: 0
     m_VarianceClampScale: 0.9
     m_ContrastAdaptiveSharpening: 0
---- !u!114 &351927107
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 351927102}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: febcdd2af026fb648aa36645acdc0435, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &409161876
 GameObject:
   m_ObjectHideFlags: 0
@@ -2673,6 +2657,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1505331583}
   - component: {fileID: 1505331582}
+  - component: {fileID: 1505331584}
   m_Layer: 0
   m_Name: QuantumEntityViewUpdater
   m_TagString: Untagged
@@ -2715,6 +2700,19 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1505331584
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1505331581}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 599a7aec636859241945965da64201ca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _camera: {fileID: 351927104}
 --- !u!1 &1576627081
 GameObject:
   m_ObjectHideFlags: 0
