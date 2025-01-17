@@ -85,8 +85,82 @@ MonoBehaviour:
       IsTrigger: 0
       ColliderIndex: 0
       MutableMode: 0
-  MapEntities: []
+  MapEntities:
+  - Components:
+    - rid: 4940229964789186560
+    - rid: 4940229964789186561
+    - rid: 4940229964789186562
+    - rid: 4940229964789186563
   SerializedTriangleDataUncompressedSize: 8
   references:
     version: 2
-    RefIds: []
+    RefIds:
+    - rid: 4940229964789186560
+      type: {class: Transform3DPrototype, ns: Quantum.Prototypes, asm: Quantum.Engine}
+      data:
+        Position:
+          X:
+            RawValue: -164298
+          Y:
+            RawValue: 45154
+          Z:
+            RawValue: 112787
+        Rotation:
+          X:
+            RawValue: 0
+          Y:
+            RawValue: 0
+          Z:
+            RawValue: 0
+    - rid: 4940229964789186561
+      type: {class: PhysicsCollider3DPrototype, ns: Quantum.Prototypes, asm: Quantum.Engine}
+      data:
+        ShapeConfig:
+          ShapeType: 1
+          SphereRadius:
+            RawValue: 32768
+          CapsuleRadius:
+            RawValue: 0
+          CapsuleHeight:
+            RawValue: 0
+          PositionOffset:
+            X:
+              RawValue: 0
+            Y:
+              RawValue: 0
+            Z:
+              RawValue: 0
+          BoxExtents:
+            X:
+              RawValue: 0
+            Y:
+              RawValue: 0
+            Z:
+              RawValue: 0
+          RotationOffset:
+            X:
+              RawValue: 0
+            Y:
+              RawValue: 0
+            Z:
+              RawValue: 0
+          UserTag: 0
+          IsPersistent: 1
+          CompoundShapes: []
+        Layer: 0
+        IsTrigger: 0
+        PhysicsMaterial:
+          Id:
+            Value: 0
+    - rid: 4940229964789186562
+      type: {class: PhysicsCallbacks3DPrototype, ns: Quantum.Prototypes, asm: Quantum.Engine}
+      data:
+        CallbackFlags:
+          Value: 0
+    - rid: 4940229964789186563
+      type: {class: TestBallPrototype, ns: Quantum.Prototypes, asm: Quantum.Simulation}
+      data:
+        amount:
+          RawValue: 0
+        forward:
+          Value: 0

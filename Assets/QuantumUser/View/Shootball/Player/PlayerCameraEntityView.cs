@@ -37,7 +37,7 @@ namespace Quantum.Shootball
 
             // Get the last predicted frame (this frame is further than the verified frame)
             var frame = Game.Frames.Predicted;
-            // The the aim component
+            // Aim component
             var aim = frame.Get<PlayerAim>(EntityRef);
 
             // Adjust pitch and jaw by adding the cached values to the verified values

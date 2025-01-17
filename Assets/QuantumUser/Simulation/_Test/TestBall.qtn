@@ -1,0 +1,5 @@
+component TestBall 
+{
+    FP amount;
+    bool forward;
+}
